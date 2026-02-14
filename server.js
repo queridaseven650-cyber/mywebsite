@@ -115,7 +115,7 @@ app.post('/api/upload-post', async (req, res) => {
 
 // --- 启动服务器 ---
 const PORT = 3001;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🚀 璃心燃点实验室后端已就绪:`);
   console.log(`📡 API 地址: http://localhost:${PORT}/api`);
   console.log(`📂 图片资源: http://localhost:${PORT}/uploads\n`);
