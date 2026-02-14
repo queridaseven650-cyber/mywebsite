@@ -1,0 +1,113 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@300;400;600&display=swap');
+
+:root {
+  --accent-blue: #00c8ff;
+  --deep-blue: #0044ff;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* index.css */
+/* index.css 修改建议 */
+body {
+  margin: 0;
+  background-color: #000510; /* 移除之前的 !important */
+  color: #fff;
+}
+/* 确保 Canvas 容器铺满且不遮挡文字 */
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+/* 移除 .fluid-stage 里的 filter: contrast 声明，因为它会和内联样式叠加 */
+.fluid-stage {
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+}
+/* 1. 字体增强 */
+.font-serif {
+  font-family: 'Orbitron', sans-serif !important;
+  letter-spacing: 2px;
+  color: #fff;
+  /* 增加外发光，让文字在深蓝背景中更清晰 */
+  text-shadow: 
+    0 0 10px rgba(0, 200, 255, 0.8),
+    0 0 30px rgba(0, 200, 255, 0.4);
+}
+
+/* 2. 背景容器基础样式 */
+.fluid-stage {
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  overflow: hidden;
+  pointer-events: none;
+  /* 注意：具体的 filter 和 background 已经在 index.tsx 的 inline style 中定义，此处作为兜底 */
+}
+
+/* 3. 噪点层：增加电影级质感 */
+.noise-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 4. 玻璃拟态卡片优化 */
+.card-glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-glass:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(0, 200, 255, 0.4);
+  transform: translateY(-5px);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(0, 200, 255, 0.1);
+}
+
+/* 5. 滚动条美化 */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.group:hover .absolute.inset-0.pointer-events-none {
+  background: linear-gradient(to bottom, transparent, rgba(0, 200, 255, 0.1), transparent);
+  animation: scanline 2s linear infinite;
+}
